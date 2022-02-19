@@ -26,35 +26,34 @@ export default defineComponent({
       view.value = new MapView({
         container: "esri-map",
         map,
-        zoom: 5,
-        center: [-95, 39],
+        zoom: 14,
+        center: [17.644621, 59.858131],
         popup: {
           autoOpenEnabled: false,
         },
       });
 
-      layer.value = new FeatureLayer({
-        portalItem: {
-          id: "9e2f2b544c954fda9cd13b7f3e6eebce",
-        },
-        outFields: ["*"],
-        title: "Recent Earthquakes",
-      });
+      // layer.value = new FeatureLayer({
+      //   portalItem: {
+      //     id: "9e2f2b544c954fda9cd13b7f3e6eebce",
+      //   },
+      //   outFields: ["*"],
+      //   title: "Recent Earthquakes",
+      // });
 
-      try {
-        //this will generate an error
-        map.add(layer.value);
-      } catch (e) {
-        console.log("error with map.add(layer)");
-        console.log(e);
-        map.add(layer.value.load());
-      }
+      // try {
+      //   //this will generate an error
+      //   map.add(layer.value);
+      // } catch (e) {
+      //   console.log("error with map.add(layer)");
+      //   console.log(e);
+      //   map.add(layer.value.load());
+      // }
 
-      //this will also throw an error
-      view.value.whenLayerView(layer.value).then((layerView) => {
-        console.log("layerview generated");
-        console.log(layerView);
-      });
+      // view.value.whenLayerView(layer.value).then((layerView) => {
+      //   console.log("layerview generated");
+      //   console.log(layerView);
+      // });
     };
     onMounted(setupMap);
     return { setupMap, view, layer };
