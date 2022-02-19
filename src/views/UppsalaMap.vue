@@ -1,5 +1,5 @@
 <template>
-  <div id="esri-map"></div>
+  <div id="map-view-container"></div>
 </template>
 
 <script lang="ts">
@@ -19,12 +19,19 @@ export default defineComponent({
     ///let app = reactive({ zones: null, view:null });
 
     const setupMap = () => {
+      
       const map = new Map({
-        basemap: "topo-vector",
+        // basemap: "topo-vector",
+        // basemap: "hybrid",
+        // basemap: "gray-vector",
+        basemap: "streets-vector",
+        // basemap: "terrain",
+        // basemap: "streets-night-vector"
+        // basemap: "dark-gray-vector"
       });
 
       view.value = new MapView({
-        container: "esri-map",
+        container: "map-view-container",
         map,
         zoom: 14,
         center: [17.644621, 59.858131],
@@ -35,6 +42,7 @@ export default defineComponent({
 
       // layer.value = new FeatureLayer({
       //   portalItem: {
+      //     id: "9e2f2b544c954fda9cd13b7f3e6eebce",
       //     id: "9e2f2b544c954fda9cd13b7f3e6eebce",
       //   },
       //   outFields: ["*"],
@@ -62,9 +70,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
-#esri-map{
+#map-view-container{
   padding:0;
-  margin:0;
-  height:1000px;
+  margin:0 auto;
+  width: 80vw;
+  height:600px;
 }
 </style>
