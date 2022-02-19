@@ -10,6 +10,7 @@
   "dependencies": {
     "@arcgis/core": "^4.22.2",
     "core-js": "^3.6.5",
+    "esri-loader": "^3.4.0",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0"
   },
