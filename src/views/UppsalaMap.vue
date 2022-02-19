@@ -14,6 +14,7 @@ export default defineComponent({
   setup() {
     let layer: Ref<FeatureLayer | null> = ref(null);
     let view: Ref<MapView | null> = ref(null);
+    const viewType = ref(['topo-vector', 'hybrid', 'gray-vector', 'streets-vector', 'streets-night-vector', 'dark-gray-vector'])
 
     //same issues with reactive object as well
     ///let app = reactive({ zones: null, view:null });
@@ -21,13 +22,7 @@ export default defineComponent({
     const setupMap = () => {
       
       const map = new Map({
-        // basemap: "topo-vector",
-        // basemap: "hybrid",
-        // basemap: "gray-vector",
-        basemap: "streets-vector",
-        // basemap: "terrain",
-        // basemap: "streets-night-vector"
-        // basemap: "dark-gray-vector"
+        basemap: viewType.value[3],
       });
 
       view.value = new MapView({
@@ -73,7 +68,7 @@ export default defineComponent({
 #map-view-container{
   padding:0;
   margin:0 auto;
-  width: 80vw;
-  height:600px;
+  width: 90vw;
+  height:800px;
 }
 </style>
