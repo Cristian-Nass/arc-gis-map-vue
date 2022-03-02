@@ -5,6 +5,9 @@
 <script>
 import Map from "@arcgis/core/Map";
 import MapView from "@arcgis/core/views/MapView";
+import * as Locator from "@arcgis/core/rest/locator";
+import Graphic from "@arcgis/core/Graphic";
+import AddressCandidate from "@arcgis/core/rest/support/AddressCandidate";
 // import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
 import { defineComponent, ref, onMounted } from "vue";
 
@@ -13,7 +16,6 @@ export default defineComponent({
 
   setup() {
     // let layer: Ref<FeatureLayer | null> = ref(null);
-    const view = ref(null);
     // const viewType = ref(['topo-vector', 'hybrid', 'gray-vector', 'streets-vector', 'streets-night-vector', 'dark-gray-vector'])
 
     //same issues with reactive object as well
@@ -24,7 +26,7 @@ export default defineComponent({
         basemap: "streets-navigation-vector",
       });
 
-      view.value = new MapView({
+      const view = new MapView({
         container: "map-view-container",
         map,
         zoom: 14,
@@ -32,6 +34,44 @@ export default defineComponent({
         popup: {
           autoOpenEnabled: false,
         },
+      });
+      const serverUrl =
+        "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer";
+      const params = {
+        address: {
+          address: "Fänkålsgatan 25, 754 47 Uppsala",
+        },
+      };
+
+      Locator.addressToLocations(serverUrl, params).then((results) => {
+        if (results.length) {
+          const result = results[0];
+          const resultGraphic = new Graphic({
+            geometry: result.location,
+            symbol: {
+              type: "simple-marker",
+              color: "red",
+              size: "12px",
+              outline: {
+                color: "#ffffff",
+                width: "2px",
+              },
+            },
+            attributes: {
+              title: "address",
+              address: result.address,
+            },
+            popupTemplate: {
+              title: "title",
+              content: result.address,
+            },
+          });
+          view.graphics.add(resultGraphic);
+          view.goTo({
+            target: resultGraphic,
+            zoom: 13,
+          });
+        }
       });
 
       // layer.value = new FeatureLayer({
