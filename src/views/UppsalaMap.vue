@@ -2,27 +2,26 @@
   <div id="map-view-container"></div>
 </template>
 
-<script lang="ts">
+<script>
 import Map from "@arcgis/core/Map";
 import MapView from "@arcgis/core/views/MapView";
-import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
-import { defineComponent, ref, Ref, onMounted } from "vue";
+// import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
+import { defineComponent, ref, onMounted } from "vue";
 
 export default defineComponent({
-    name: 'Map',
+  name: "Map",
 
   setup() {
-    let layer: Ref<FeatureLayer | null> = ref(null);
-    let view: Ref<MapView | null> = ref(null);
-    const viewType = ref(['topo-vector', 'hybrid', 'gray-vector', 'streets-vector', 'streets-night-vector', 'dark-gray-vector'])
+    // let layer: Ref<FeatureLayer | null> = ref(null);
+    const view = ref(null);
+    // const viewType = ref(['topo-vector', 'hybrid', 'gray-vector', 'streets-vector', 'streets-night-vector', 'dark-gray-vector'])
 
     //same issues with reactive object as well
     ///let app = reactive({ zones: null, view:null });
 
-    const setupMap = () => {
-      
+    const setupMap = async () => {
       const map = new Map({
-        basemap: viewType.value[3],
+        basemap: "streets-navigation-vector",
       });
 
       view.value = new MapView({
@@ -59,16 +58,16 @@ export default defineComponent({
       // });
     };
     onMounted(setupMap);
-    return { setupMap, view, layer };
+    return {};
   },
 });
 </script>
 
 <style scoped>
-#map-view-container{
-  padding:0;
-  margin:0 auto;
+#map-view-container {
+  padding: 0;
+  margin: 0 auto;
   width: 90vw;
-  height:800px;
+  height: 800px;
 }
 </style>
