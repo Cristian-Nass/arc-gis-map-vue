@@ -42,6 +42,15 @@ export default {
             const result = results[0];
             const resultGraphic = new Graphic({
               geometry: result.location,
+              symbol: {
+                type: "simple-marker",
+                color: "red",
+                size: "12px",
+                outline: {
+                  color: "#ffffff",
+                  width: "2px",
+                },
+              },
               attributes: {
                 title: "address",
                 address: result.address,
